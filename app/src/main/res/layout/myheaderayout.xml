@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+   <ImageView
+       android:id="@+id/my_scrollviewhead_src"
+       android:layout_marginTop="20dp"
+      android:layout_marginLeft="100dp"
+       android:layout_width="20dp"
+       android:layout_height="wrap_content"
+       />
+    <TextView
+        android:id="@+id/my_serollviewhead_title"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/my_scrollviewhead_src"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF060505"
+        android:text="一起装修网省钱有保障"/>
+    <TextView
+        android:id="@+id/my_serollviewhead_time"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/my_scrollviewhead_src"
+        android:layout_below="@id/my_serollviewhead_title"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF837D7F"
+        android:text="上次更新：9分钟之前"/>
+</RelativeLayout>
