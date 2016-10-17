@@ -8,6 +8,7 @@ import com.zhy.http.okhttp.builder.GetBuilder;
 import com.zhy.http.okhttp.builder.PostFormBuilder;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -20,7 +21,8 @@ public class MyOkHttpUtils extends StringCallback {
     private void MyOkHttpUtils(){
 
     }
-    Map<Integer,OnMyOkHttp>map;
+
+    Map<Integer,OnMyOkHttp>map = new HashMap<>();
      private static MyOkHttpUtils mOkHttpUtils;
     public static MyOkHttpUtils getmOkHttpUtils(){
             if(mOkHttpUtils==null){
@@ -46,12 +48,12 @@ public class MyOkHttpUtils extends StringCallback {
     }
     @Override
     public void onError(Request request, Exception e) {
-        mOnMyOkHttp.onError(request,e);
+        map.get(oknumber).onError(request,e);
     }
 
     @Override
     public void onResponse(String response) {
-        mOnMyOkHttp.onResponse(response);
+        map.get(oknumber).onResponse(response);
     }
     //回调接口
     public interface OnMyOkHttp{
@@ -61,9 +63,9 @@ public class MyOkHttpUtils extends StringCallback {
     OnMyOkHttp mOnMyOkHttp;
     //接口
     int oknumber;
-    public void OnOkHttp(OnMyOkHttp mOnMyOkHttp){
-        this.mOnMyOkHttp = mOnMyOkHttp;
-
+    public void OnOkHttp(int number,OnMyOkHttp mOnMyOkHttp){
+       this.mOnMyOkHttp = map.put(++number,mOnMyOkHttp);
+       this.oknumber =number;
     }
 }
 
