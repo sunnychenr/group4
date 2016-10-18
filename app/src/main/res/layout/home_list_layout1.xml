@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/head_src_list1"
+        android:layout_marginLeft="30dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+
+        />
+    <TextView
+        android:id="@+id/name_list1"
+        android:layout_toRightOf="@id/head_src_list1"
+        android:layout_width="200dp"
+        android:layout_height="25dp"
+        android:textStyle="bold"
+        android:textSize="10sp"
+        android:textColor="#FF080808"
+        android:gravity="center_vertical"
+        android:text="发帖者姓名"/>
+    <TextView
+        android:id="@+id/time_list1"
+        android:layout_toRightOf="@id/head_src_list1"
+        android:layout_below="@id/name_list1"
+        android:layout_width="200dp"
+        android:layout_height="25dp"
+        android:gravity="center_vertical"
+        android:text="s发布时间"/>
+    <ImageView
+        android:id="@+id/add_attention"
+        android:layout_toRightOf="@id/name_list1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/add_attention"/>
+    <TextView
+        android:id="@+id/text_title_list1"
+        android:layout_below="@id/time_list1"
+        android:layout_width="match_parent"
+        android:text="帖子标签"
+        android:textColor="#FF080808"
+        android:maxLines="2"
+        android:layout_height="50dp" />
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/src_list1"
+        android:layout_below="@id/text_title_list1"
+        android:layout_width="match_parent"
+        android:layout_height="180dp" />
+    <TextView
+        android:id="@+id/forum_list1"
+        android:layout_below="@id/src_list1"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:textColor="#FF2D43CF"
+        android:text="论坛"
+        />
+     <TextView
+         android:id="@+id/share_list1"
+         android:layout_below="@id/src_list1"
+         android:layout_alignParentRight="true"
+         android:layout_width="50dp"
+         android:drawableLeft="@mipmap/comment_hui"
+         android:gravity="center"
+         android:text="6"
+         android:layout_height="40dp" />
+    <TextView
+        android:id="@+id/invitation_info_list1"
+        android:layout_below="@id/src_list1"
+        android:layout_toLeftOf="@id/share_list1"
+        android:drawableLeft="@mipmap/comment_hui"
+        android:text="243"
+        android:gravity="center"
+        android:layout_width="60dp"
+        android:layout_height="40dp" />
+</RelativeLayout>
