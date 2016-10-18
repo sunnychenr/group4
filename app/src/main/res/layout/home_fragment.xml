@@ -78,13 +78,13 @@
                         android:background="#FF949292"
                         android:orientation="horizontal"
                         android:layout_height="10dp"></LinearLayout>
-                    <ListView
+                    <com.group4.view.My_Home_ListView
                         android:layout_marginTop="10dp"
                         android:id="@+id/home_liseview"
                         android:background="#FFF7F5F6"
                         android:layout_below="@id/home_gridview"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"></ListView>
+                        android:layout_height="match_parent"></com.group4.view.My_Home_ListView>
                 </RelativeLayout>
             </ScrollView>
         </in.srain.cube.views.ptr.PtrClassicFrameLayout>

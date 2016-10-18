@@ -1,6 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/name_list2"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:drawableLeft="@mipmap/ic_home_school"
+        android:gravity="center"
+        android:text="装修学堂" />
+    <View
+        android:id="@+id/test"
+        android:layout_width="1dp"
+        android:layout_marginTop="5dp"
+        android:layout_height="30dp"
+        android:background="#FFABAAAA"
+        android:layout_toRightOf="@id/name_list2" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/text_title_list2"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/test"
+        android:ellipsize="end"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:text="50平公寓 ， 满满托斯卡纳风情"
+        android:textColor="#FF080808" />
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/src_list2"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_below="@id/name_list2" />
+
+    <TextView
+        android:id="@+id/time_list2"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/src_list2"
+        android:gravity="center"
+        android:text="6天前" />
+
+    <TextView
+        android:id="@+id/share_list2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/src_list2"
+        android:drawableLeft="@mipmap/comment_hui"
+        android:gravity="center"
+        android:text="6" />
+
+    <TextView
+        android:id="@+id/invitation_info_list2"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/src_list2"
+        android:layout_toLeftOf="@id/share_list2"
+        android:drawableLeft="@mipmap/looked_hui"
+        android:gravity="center"
+        android:text="243" />
+    <View
+        android:layout_below="@id/invitation_info_list2"
+        android:layout_width="match_parent"
+        android:background="#FF8F8F8F"
+        android:layout_height="10dp"/>
+</RelativeLayout>

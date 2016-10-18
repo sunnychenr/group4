@@ -7,11 +7,11 @@
         android:id="@+id/advert_src"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#FF080808"
         fresco:actualImageScaleType="focusCrop"
         fresco:progressBarImage="@drawable/land"
         fresco:progressBarImageScaleType="centerInside"
         fresco:progressBarAutoRotateInterval="1000"
         fresco:failureImage="@drawable/q1"
-
         />
 </LinearLayout>

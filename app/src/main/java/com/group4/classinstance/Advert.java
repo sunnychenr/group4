@@ -1,12 +1,13 @@
 package com.group4.classinstance;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by bwfadmin on 2016/10/16.
  */
 
-public class Advert {
+public class Advert implements Serializable {
 
 
     /**

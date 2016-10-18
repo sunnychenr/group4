@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent">
     <com.facebook.drawee.view.SimpleDraweeView
+        xmlns:fresco="http://schemas.android.com/apk/res-auto"
         android:id="@+id/head_src_list1"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="30dp"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        fresco:actualImageScaleType="fitCenter"
+        fresco:placeholderImage="@mipmap/default_avatar"
+        fresco:roundAsCircle="true"
 
         />
     <TextView
         android:id="@+id/name_list1"
+        android:layout_marginTop="10dp"
         android:layout_toRightOf="@id/head_src_list1"
         android:layout_width="200dp"
         android:layout_height="25dp"
         android:textStyle="bold"
-        android:textSize="10sp"
+        android:textSize="15sp"
         android:textColor="#FF080808"
         android:gravity="center_vertical"
         android:text="发帖者姓名"/>
@@ -27,17 +34,27 @@
         android:layout_height="25dp"
         android:gravity="center_vertical"
         android:text="s发布时间"/>
-    <ImageView
+    <TextView
         android:id="@+id/add_attention"
+        android:layout_marginTop="20dp"
         android:layout_toRightOf="@id/name_list1"
         android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/add_attention"/>
+        android:layout_height="40dp"
+        android:drawableTop="@mipmap/add_attention"
+        android:textSize="8sp"
+        android:gravity="center"
+        android:textColor="#FF12B651"
+        android:text="加关注"
+       />
     <TextView
         android:id="@+id/text_title_list1"
+        android:layout_marginLeft="15dp"
         android:layout_below="@id/time_list1"
         android:layout_width="match_parent"
+        android:gravity="center_vertical"
         android:text="帖子标签"
+        android:textSize="15sp"
+        android:textStyle="bold"
         android:textColor="#FF080808"
         android:maxLines="2"
         android:layout_height="50dp" />
@@ -67,9 +84,14 @@
         android:id="@+id/invitation_info_list1"
         android:layout_below="@id/src_list1"
         android:layout_toLeftOf="@id/share_list1"
-        android:drawableLeft="@mipmap/comment_hui"
+        android:drawableLeft="@mipmap/looked_hui"
         android:text="243"
         android:gravity="center"
         android:layout_width="60dp"
         android:layout_height="40dp" />
+    <View
+        android:layout_below="@id/invitation_info_list1"
+        android:layout_width="match_parent"
+        android:background="#FF8F8F8F"
+        android:layout_height="10dp"/>
 </RelativeLayout>

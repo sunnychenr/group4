@@ -1,13 +1,14 @@
 package com.group4.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +17,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.google.gson.Gson;
 import com.group4.classinstance.Advert;
+import com.group4.classinstance.HomeListViewInfo;
 import com.group4.madapter.GridViewAdapter;
 import com.group4.madapter.MyMainViewPagerAdapter;
-import com.group4.okhttputil.MyOkHttpUtils;
+import com.group4.madapter.My_Home_ListView_Adapter;
 import com.group4.okhttputil.MyUtils;
 import com.group4.view.MyHeaderView;
 import com.group4.yiqihouse.MainActivity;
 import com.group4.yiqihouse.R;
-import com.squareup.okhttp.Request;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +49,9 @@ public class Home_fragment extends Fragment {
     GridViewAdapter mgirdsp;
     SimpleDraweeView mSimp1, mSimp2, mSimp3, mSimp4, mSimp5;
     Handler MyHander;
+    My_Home_ListView_Adapter mlistsp;
+     MyHeaderView mheader;
+    String time;
     public Home_fragment() {
     }
     @SuppressLint("ValidFragment")
@@ -66,12 +69,33 @@ public class Home_fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        View vv = inflater.inflate(R.layout.home_fragment,null);
+        SharedPreferences advert = getContext().getSharedPreferences("time", Context.MODE_PRIVATE);
+        time =  advert.getString("time","0");
         initview(vv);
+      Bundle bundle =  Home_fragment.this.getArguments();
+        getbundle(bundle);
+
         return vv;
     }
-  public void setMviewpagerdate(List<Advert.DataBean> data){
+    //重Bundle中取数据
+    private void getbundle(Bundle bundle) {
+        if(bundle!=null){
+         Object mdate = bundle.getSerializable("adverts");
+            Object mdate1= bundle.getSerializable("homeListViewInfo");
+            if(mdate instanceof  Advert){
+                Advert advert = (Advert) mdate;
+                setMviewpagerdate(advert.getData());
+            }
+            if(mdate1 instanceof HomeListViewInfo){
+                HomeListViewInfo homeListViewInfo = (HomeListViewInfo) mdate1;
+                setlistviewdate(homeListViewInfo.getData());
+            }
+        }
+    }
+
+    public void setMviewpagerdate(List<Advert.DataBean> data){
       addadvertview(data);
-      mviewpagersp = new MyMainViewPagerAdapter(getContext(), mview);
+      mviewpagersp = new MyMainViewPagerAdapter(getActivity(), mview);
       mviewpager.setAdapter(mviewpagersp);
       MyUtils util = new MyUtils();
       Message msg = Message.obtain();
@@ -80,33 +104,7 @@ public class Home_fragment extends Fragment {
       MyHander.sendMessageDelayed(msg, 4000);
       util.setvierpageradvert(mviewpager, MyHander);
   }
-    @Override
-    public void onStart() {
-        MyOkHttpUtils.getmOkHttpUtils().OnOkHttp(1,new MyOkHttpUtils.OnMyOkHttp() {
-            @Override
-            public void onError(Request request, Exception e) {
-                Log.d("lyh", "失败" + request);
-            }
 
-            @Override
-            public void onResponse(String response) {
-                Log.d("lyh", "结果" + response);
-                Gson gosn = new Gson();
-                Advert adverts = gosn.fromJson(response, Advert.class);
-                List<Advert.DataBean> data = adverts.getData();
-                addadvertview(data);
-                mviewpagersp = new MyMainViewPagerAdapter(getContext(), mview);
-                mviewpager.setAdapter(mviewpagersp);
-                MyUtils util = new MyUtils();
-                Message msg = Message.obtain();
-                msg.what = MainActivity.SCROLL_STATE_IDLE;
-                msg.arg1 = 1;
-                MyHander.sendMessageDelayed(msg, 4000);
-                util.setvierpageradvert(mviewpager, MyHander);
-            }
-        });
-        super.onStart();
-    }
 
     private void initview(View vv) {
         mview = new ArrayList<>();
@@ -121,7 +119,7 @@ public class Home_fragment extends Fragment {
         mMenumytext = (TextView) vv.findViewById(R.id.home_menu_mybt);
         mgirdsp = new GridViewAdapter(getContext());
         mgridview.setAdapter(mgirdsp);
-        final MyHeaderView mheader = new MyHeaderView(getContext());
+        mheader = new MyHeaderView(getContext(),time);
         mptrClassicFrameLayout.disableWhenHorizontalMove(true);
         mptrClassicFrameLayout.setHeaderView(mheader);
         mptrClassicFrameLayout.addPtrUIHandler(mheader);
@@ -134,8 +132,8 @@ public class Home_fragment extends Fragment {
         });
     }
     //初始化广告view
-    private void addadvertview(List<Advert.DataBean> data) {
-        LayoutInflater inflater = LayoutInflater.from(getContext());
+    public void addadvertview(List<Advert.DataBean> data) {
+       LayoutInflater inflater = LayoutInflater.from(getActivity());
         View view1 = inflater.inflate(R.layout.advertviewpagerlayout, null);
         mSimp1 = (SimpleDraweeView) view1.findViewById(R.id.advert_src);
         mSimp1.setImageURI(data.get(0).getImagesrc2());
@@ -160,5 +158,22 @@ public class Home_fragment extends Fragment {
    public ViewPager getMviewpager(){
        return this.mviewpager;
    }
+   public void setlistviewdate(List<HomeListViewInfo.DataBean> data){
+       if(mlistsp==null){
+           mlistsp = new My_Home_ListView_Adapter(getContext(),data);
+           mlistview.setAdapter(mlistsp);
+       }else{
+           mlistsp.notifyDataSetChanged();
+       }
+   }
 
+    @Override
+    public void onDestroy() {
+        time =  mheader.settime();
+        SharedPreferences advert = getContext().getSharedPreferences("time", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = advert.edit();
+        edit.putString("time", time);
+        edit.commit();
+        super.onDestroy();
+    }
 }

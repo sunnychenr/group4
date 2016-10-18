@@ -1,5 +1,8 @@
 package com.group4.yiqihouse;
 
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,9 +17,11 @@ import android.widget.Toast;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.gson.Gson;
 import com.group4.classinstance.Advert;
+import com.group4.classinstance.HomeListViewInfo;
 import com.group4.fragment.Home_fragment;
 import com.group4.okhttputil.MyOkHttpUtils;
 import com.squareup.okhttp.Request;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,15 +34,19 @@ public class MainActivity extends FragmentActivity {
     RelativeLayout mfragmentlayout;
     FragmentManager manger;
     FragmentTransaction mTransaction;
+    Gson gosn;
+    String date[] ;
+    List<Advert.DataBean> advertdata = new ArrayList<>();//广告数据
+    List<HomeListViewInfo.DataBean> listdata = new ArrayList<>();//listview数据
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Fresco.initialize(this);
-       // mfragmentlayout = (RelativeLayout) findViewById(R.id.main_fragment);
         Log.d("lyh", "进来");
+        gosn  = new Gson();
         addfragment();
-        initdatel();
+        getcachedate();
     }
 
     private void addfragment() {
@@ -51,43 +60,77 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     protected void onStart() {
-        MyOkHttpUtils.getmOkHttpUtils().OnOkHttp(1,new MyOkHttpUtils.OnMyOkHttp() {
-            @Override
-            public void onError(Request request, Exception e) {
-                Log.d("lyh", "失败" + request);
-            }
 
-            @Override
-            public void onResponse(String response) {
-                Log.d("lyh", "结果" + response);
-                Gson gosn = new Gson();
-                Advert adverts = gosn.fromJson(response, Advert.class);
-                List<Advert.DataBean> data = adverts.getData();
-                mhome.setMviewpagerdate(data);
-            }
-        });
-        //广告轮播
-        MyOkHttpUtils.getmOkHttpUtils().OnOkHttp(2, new MyOkHttpUtils.OnMyOkHttp() {
-            @Override
-            public void onError(Request request, Exception e) {
-                Log.d("lyh", "失败" + request);
-            }
 
-            @Override
-            public void onResponse(String response) {
-                Log.d("lyh", "结果" + response);
-            }
-        });
+
         super.onStart();
+    }
+
+    private void getcachedate() {
+        getdata("advert","homeListViewInfo");
+        if(date[0].length()<10&&date[1].length()<10){
+            initdatel();
+            initdateinfo();
+        }
+        else {
+            if (date[0].length() < 10 && date[1].length() > 10) {
+                Log.d("lyh", "广告请求");
+                initdatel();
+
+            } else {
+                if (date[1].length() < 10 && date[0].length() > 10) {
+                    initdateinfo();
+                } else {
+                    Log.d("lyh", "进缓存");
+                    Advert adverts = gosn.fromJson(date[0], Advert.class);
+                    advertdata= adverts.getData();
+                    HomeListViewInfo homeListViewInfo = gosn.fromJson(date[1], HomeListViewInfo.class);
+                    listdata = homeListViewInfo.getData();
+                   Bundle bundle = new Bundle();
+                   bundle.putSerializable("adverts",adverts);
+                   bundle.putSerializable("homeListViewInfo",homeListViewInfo);
+                    mhome.setArguments(bundle);
+                    Log.d("lyh", "数据丢到碎片中");
+                }
+            }
+        }
     }
 
     //初始化数据
     private void initdatel() {
         advertmodel = new ArrayList<>();
         String url = "http://123.56.145.151:8080/YiQiHouse/HomeAD";
+
+        MyOkHttpUtils.getmOkHttpUtils().gethttp(url, new StringCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+
+            }
+            @Override
+            public void onResponse(String response) {
+                Advert adverts = gosn.fromJson(response, Advert.class);
+                advertdata= adverts.getData();
+               mhome.setMviewpagerdate(advertdata);
+                cachedatel("advert",response);
+            }
+        });
+    }
+
+    private void initdateinfo() {
         String url1 = "http://123.56.145.151:8080/YiQiHouse/HomeBBS?page=1";
-        MyOkHttpUtils.getmOkHttpUtils().gethttp(url);
-          MyOkHttpUtils.getmOkHttpUtils().gethttp(url1);
+        MyOkHttpUtils.getmOkHttpUtils().gethttp(url1, new StringCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+            }
+
+            @Override
+            public void onResponse(String response) {
+                HomeListViewInfo homeListViewInfo = gosn.fromJson(response, HomeListViewInfo.class);
+                listdata = homeListViewInfo.getData();
+                mhome.setlistviewdate(listdata);
+                cachedatel("homeListViewInfo",response);
+            }
+        });
     }
 
     //初始化控件
@@ -136,12 +179,33 @@ public class MainActivity extends FragmentActivity {
                     break;
                 case SCROLL_STATE_IDLE:
                     int arg1 = msg.arg1;
-                    Log.d("lyh","Handler离开"+arg1);
                        mhome.getMviewpager().setCurrentItem(arg1);
                     break;
             }
         }
     };
 
+    //缓存写入数据
+    public void cachedatel(String filename, String date) {
+        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+        am.getMemoryInfo(mi);
+        int hh = (int) (mi.availMem / 1024 / 1024);
+        if (hh > (hh - (hh / 7))) {
+            Log.d("lyh", "缓存大小" + (hh - (hh / 7)));
+            SharedPreferences advert = getSharedPreferences(filename, Context.MODE_PRIVATE);
+            SharedPreferences.Editor edit = advert.edit();
+            edit.putString(filename, date);
+            edit.commit();
+        }
+      }
+    public String[] getdata(String key,String key1){
+        date = new String[2];
+        SharedPreferences advert = getSharedPreferences(key, Context.MODE_PRIVATE);
+        SharedPreferences advert1 = getSharedPreferences(key1, Context.MODE_PRIVATE);
+       date[0] = advert.getString(key,"0");
+        date[1] =advert1.getString(key1,"0");
+       return date;
+    }
 }
 
