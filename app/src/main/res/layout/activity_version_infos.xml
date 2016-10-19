@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_version_infos"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <ImageView
+            android:id="@+id/version_back"
+            style="@style/TitleBack"/>
+
+        <TextView
+            android:text="版本信息"
+            style="@style/LayoutTitle" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/version_appIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:id="@+id/version_appName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/version_appIcon"
+            android:layout_marginTop="10dp"
+            android:text="一起装修"
+            android:textSize="20sp"
+            android:textColor="#050505"/>
+
+        <TextView
+            android:id="@+id/version_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/version_appName"
+            android:text="1.0.0"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/version_toUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/version_num"
+            android:layout_marginTop="50dp"
+            android:text="版本更新"
+            android:textSize="16sp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

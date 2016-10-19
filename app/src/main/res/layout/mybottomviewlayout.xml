@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:orientation="horizontal"
+    >
+    <View
+       android:layout_weight="1"
+        android:layout_width="100dp"
+        android:background="#FF706C6D"
+        android:layout_height="1dp"
+        android:layout_gravity="center_vertical"
+        />
+    <TextView
+        android:id="@+id/my_serollviewbottom_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textSize="15sp"
+        android:text="加载中"
+        />
+
+    <View
+        android:layout_weight="1"
+        android:layout_width="100dp"
+        android:background="#FF706C6D"
+        android:layout_height="1dp"
+        android:layout_gravity="center_vertical"
+        />
+
+
+</LinearLayout>
