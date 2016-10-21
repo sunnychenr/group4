@@ -8,6 +8,8 @@
       android:layout_marginLeft="100dp"
        android:layout_width="20dp"
        android:layout_height="wrap_content"
+       android:src="@mipmap/ptr_rotate_arrow"
+
        />
     <TextView
         android:id="@+id/my_serollviewhead_title"
@@ -20,11 +22,11 @@
         android:text="一起装修网省钱有保障"/>
     <TextView
         android:id="@+id/my_serollviewhead_time"
-        android:layout_marginTop="5dp"
-        android:layout_toRightOf="@id/my_scrollviewhead_src"
+        android:layout_marginTop="15dp"
         android:layout_below="@id/my_serollviewhead_title"
         android:layout_marginLeft="10dp"
-        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#FF837D7F"
         android:text="上次更新：9分钟之前"/>

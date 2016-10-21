@@ -24,8 +24,10 @@ import in.srain.cube.views.ptr.indicator.PtrIndicator;
 public class MyHeaderView extends FrameLayout implements PtrUIHandler{
   ImageView msrc;
     TextView mtitle,mtme;
-    public MyHeaderView(Context context) {
+    String time;
+    public MyHeaderView(Context context,String time) {
         super(context);
+        this.time = time;
        initview(context);
     }
 
@@ -35,6 +37,7 @@ public class MyHeaderView extends FrameLayout implements PtrUIHandler{
        msrc = (ImageView) vv.findViewById(R.id.my_scrollviewhead_src);
        mtitle = (TextView) vv.findViewById(R.id.my_serollviewhead_title);
         mtme = (TextView) vv.findViewById(R.id.my_serollviewhead_time);
+        mtme.setText("上次更新时间"+time);
         addView(vv);
     }
 
@@ -82,11 +85,12 @@ public class MyHeaderView extends FrameLayout implements PtrUIHandler{
         }
         invalidate();
     }
-    public void settime(){
+    public String settime(){
         Date data = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
         String time = format.format(data.getTime());
         mtme.setText("上次更新"+time);
         Log.d("lyh","改变时间"+time);
+        return time;
     }
 }

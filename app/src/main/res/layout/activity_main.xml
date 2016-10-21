@@ -3,94 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.group4.yiqihouse.MainActivity">
-
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
-       <in.srain.cube.views.ptr.PtrClassicFrameLayout
-           android:id="@+id/mptr"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:background="#FFC4C4C4"
-           app:ptr_duration_to_close="200"
-           app:ptr_duration_to_close_header="200"
-           app:ptr_keep_header_when_refresh="true"
-           app:ptr_pull_to_fresh="false"
-           app:ptr_ratio_of_header_height_to_refresh="1.2"
-           app:ptr_resistance="1.2"
-           >
-           <RelativeLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
-               <RelativeLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="35dp"
-                   android:gravity="center"
-                   android:orientation="horizontal">
-                   <Button
-                       android:id="@+id/home_title_scan"
-                       android:layout_marginLeft="8dp"
-                       android:layout_width="25dp"
-                       android:layout_height="25dp"
-                       android:background="@mipmap/scan_qr"
-                       android:onClick="homeonclick"
-                       />
-                   <TextView
-                       android:id="@+id/home_title_search"
-                       android:layout_marginLeft="25dp"
-                       android:layout_width="260dp"
-                       android:layout_centerHorizontal="true"
-                       android:background="@drawable/home_title_text_shape"
-                       android:gravity="center_vertical"
-                       android:drawableLeft="@mipmap/search_pressed"
-                       android:layout_height="match_parent"
-                       android:text="搜索用户/帖子"/>
-                   <Button
-                       android:id="@+id/home_title_scan_title_position"
-                       android:layout_width="60dp"
-                       android:layout_height="wrap_content"
-                       android:background="@null"
-                       android:layout_alignParentRight="true"
-                       android:onClick="homeonclick"
-                       android:drawableRight="@mipmap/arrow_pic_tab_down"
-                       android:text="成都"/>
-               </RelativeLayout>
-               <android.support.v4.view.ViewPager
-                   android:id="@+id/home_viewpager"
-                   android:layout_width="match_parent"
-                   android:layout_height="150dp">
-               </android.support.v4.view.ViewPager>
-               <GridView
-                   android:id="@+id/home_gridview"
-                   android:layout_below="@id/home_viewpager"
-                   android:background="#FFF7F5F6"
-                   android:layout_width="match_parent"
-                   android:layout_height="140dp"></GridView>
-               <ListView
-                   android:layout_marginTop="10dp"
-                   android:id="@+id/home_liseview"
-                   android:background="#FFF7F5F6"
-                   android:layout_below="@id/home_gridview"
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"></ListView>
-
-
-           </RelativeLayout>
-       </in.srain.cube.views.ptr.PtrClassicFrameLayout>
-
-   </RelativeLayout>
-    <Button
-        android:id="@+id/home_bt"
-        android:layout_width="75dp"
-        android:layout_height="30dp"
-        android:background="@mipmap/ic_go_top"
-        android:onClick="homeonclick"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="70dp"
-        />
+    <RelativeLayout
+        android:id="@+id/main_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/home_menu_layout"></RelativeLayout>
      <LinearLayout
          android:id="@+id/home_menu_layout"
          android:layout_alignParentBottom="true"
